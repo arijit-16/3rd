@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arijit Pal Portfolio</title>
+<style>
+  /* Reset & Base */
+  * {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+  }
+  body {
+    background: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+    transition: background-color 0.4s, color 0.4s;
+  }
+  body.light-theme {
+    background: #f0f0f0;
+    color: #222;
+  }
+
+  /* Header */
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .welcome-text {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #bb86fc;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #bb86fc;
+    animation: blink-caret 0.8s step-end infinite;
+    min-width: 180px;
+  }
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #bb86fc; }
+  }
+
+  /* Navbar typing */
+  .navbar-typing {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #bb86fc;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #bb86fc;
+    animation: blink-caret 0.8s step-end infinite;
+  }
+
+  /* Profile picture & name typing container */
+  .profile-container {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #bb86fc;
+    box-shadow: 0 0 10px #bb86fcaa;
+    margin-bottom: 8px;
+  }
+  .name-typing {
+    font-size: 2.6rem;
+    font-weight: 900;
+    min-height: 40px;
+    color: #bb86fc;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #bb86fc;
+  }
+
+  .tagline {
+    text-align: center;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    color: #ddd;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #ddd;
+    min-height: 30px;
+  }
+
+  /* Nav */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  nav a, nav button {
+    text-decoration: none;
+    color: #bb86fc;
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+  nav a.active, nav a:hover, nav button:hover {
+    background: #bb86fc;
+    color: #121212;
+  }
+
+  /* Collapsible Sections */
+  .collapsible-section {
+    max-width: 700px;
+    margin: 0 auto 40px;
+    border-radius: 10px;
+    background: #222;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(187,134,252,0.4);
+  }
+  .collapsible-header {
+    padding: 15px 20px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    color: #bb86fc;
+    background: #333;
+    transition: background-color 0.3s ease;
+    outline-offset: 2px;
+  }
+  .collapsible-header:hover,
+  .collapsible-header.active {
+    background: #bb86fc;
+    color: #121212;
+  }
+  .section-content {
+    display: none;
+    padding: 15px 20px;
+    color: #ddd;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    min-height: 80px;
+  }
+  .section-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Skill Bars */
+  .skill {
+    margin: 15px 0;
+  }
+  .skill label {
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .skill-bar {
+    background: #333;
+    border-radius: 12px;
+    height: 22px;
+    overflow: hidden;
+  }
+  .skill-level {
+    background: #bb86fc;
+    height: 100%;
+    width: 0;
+    color: #121212;
+    font-weight: 700;
+    padding-left: 10px;
+    line-height: 22px;
+    border-radius: 12px 0 0 12px;
+    transition: width 1.5s ease;
+    white-space: nowrap;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="welcome-text" id="welcome-typing"></div>
+      <div class="navbar-typing"><span id="nav-typed"></span></div>
+    </div>
+
+    <div class="profile-container">
+      <img
+        src="https://res.cloudinary.com/dirvdnudn/image/upload/v1747285184/new_pic_irvxi8.jpg"
+        alt="Arijit Pal"
+        class="profile-pic"
+        loading="lazy"
+      />
+      <div class="name-typing" id="name-typing" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <p class="tagline" id="tagline-typing"></p>
+  </header>
+
+  <nav>
+    <a href="#about-section" class="nav-link">About</a>
+    <a href="#projects-section" class="nav-link">Projects</a>
+    <a href="#skills-section" class="nav-link">Skills</a>
+    <a href="#contact-section" class="nav-link">Contact</a>
+    <button id="themeToggle" aria-label="Toggle theme">☀️</button>
+  </nav>
+
+  <section class="collapsible-section" id="about-section">
+    <div class="collapsible-header" tabindex="0">About Me</div>
+    <div class="section-content"></div>
+  </section>
+
+  <section class="collapsible-section" id="projects-section">
+    <div class="collapsible-header" tabindex="0">Projects</div>
+    <div class="section-content"></div>
+  </section>
+
+  <section class="collapsible-section" id="skills-section">
+    <div class="collapsible-header" tabindex="0">Skills</div>
+    <div class="section-content"></div>
+  </section>
+
+  <section class="collapsible-section" id="contact-section">
+    <div class="collapsible-header" tabindex="0">Contact</div>
+    <div class="section-content"></div>
+  </section>
+
+  <footer>&copy; <span id="current-year"></span> Arijit Pal</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Data for sections
+    const data = {
+      about: "Hi, I'm Arijit Pal, a passionate Machine Learning enthusiast skilled in Python and AI project development. I enjoy solving complex problems and quickly learning new technologies.",
+      projects: "- Traffic Prediction using Random Forest\n- AI Chatbot using NLP\n- Image Classifier with CNN",
+      skills: [
+        { skill: 'Python', level: 90 },
+        { skill: 'Machine Learning', level: 85 },
+        { skill: 'JavaScript', level: 70 },
+      ],
+      contact: "Email: arijitpal090@gmail.com\nPhone: +91 8617699217",
+    };
+
+    const navTypedEl = document.getElementById('nav-typed');
+    const themeToggle = document.getElementById('themeToggle');
+    const collapsibleHeaders = document
+.querySelectorAll('.collapsible-header');
+const currentYearEl = document.getElementById('current-year');
+const welcomeTypingEl = document.getElementById('welcome-typing');
+const nameTypingEl = document.getElementById('name-typing');
+const taglineTypingEl = document.getElementById('tagline-typing');
+// Set current year in footer
+currentYearEl.textContent = new Date().getFullYear();
+
+// Typing and Erasing function
+function typeWriter(element, text, speed = 100, callback) {
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    } else if (callback) {
+      callback();
+    }
+  }
+  type();
+}
+
+function eraseText(element, speed = 50, callback) {
+  function erase() {
+    if (element.textContent.length > 0) {
+      element.textContent = element.textContent.slice(0, -1);
+      setTimeout(erase, speed);
+    } else if (callback) {
+      callback();
+    }
+  }
+  erase();
+}
+
+// Cycle text typing and erasing for left corner "Welcome to Abuden"
+const welcomeTexts = ["Welcome to Abuden"];
+let welcomeIndex = 0;
+function cycleWelcomeText() {
+  typeWriter(welcomeTypingEl, welcomeTexts[welcomeIndex], 120, () => {
+    setTimeout(() => {
+      eraseText(welcomeTypingEl, 80, () => {
+        welcomeIndex = (welcomeIndex + 1) % welcomeTexts.length;
+        cycleWelcomeText();
+      });
+    }, 1500);
+  });
+}
+
+// Cycle center name typing/erasing for "Arijit Pal"
+const centerNames = ["Arijit Pal"];
+let centerNameIndex = 0;
+function cycleCenterName() {
+  typeWriter(nameTypingEl, centerNames[centerNameIndex], 150, () => {
+    setTimeout(() => {
+      eraseText(nameTypingEl, 100, () => {
+        centerNameIndex = (centerNameIndex + 1) % centerNames.length;
+        cycleCenterName();
+      });
+    }, 1200);
+  });
+}
+
+// Typing & erasing for tagline below profile pic
+const taglineText = "Hi, I'm Arijit Pal. I love working on ML projects and I'm a passionate problem solver.";
+function cycleTagline() {
+  typeWriter(taglineTypingEl, taglineText, 40, () => {
+    setTimeout(() => {
+      eraseText(taglineTypingEl, 30, () => {
+        cycleTagline();
+      });
+    }, 3000);
+  });
+}
+
+// Load content for sections with typing or skill bars for skills
+function loadContent(sectionId, container) {
+  container.textContent = '';
+  if (sectionId === 'skills') {
+    data.skills.forEach(({ skill, level }) => {
+      const skillDiv = document.createElement('div');
+      skillDiv.className = 'skill';
+
+      const label = document.createElement('label');
+      label.textContent = skill;
+      skillDiv.appendChild(label);
+
+      const bar = document.createElement('div');
+      bar.className = 'skill-bar';
+
+      const levelBar = document.createElement('div');
+      levelBar.className = 'skill-level';
+      levelBar.style.width = '0%';
+      levelBar.textContent = level + '%';
+      bar.appendChild(levelBar);
+
+      skillDiv.appendChild(bar);
+      container.appendChild(skillDiv);
+
+      // Animate skill bar fill
+      setTimeout(() => {
+        levelBar.style.width = level + '%';
+      }, 100);
+    });
+  } else {
+    let text = data[sectionId];
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        container.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, 30);
+      }
+    }
+    type();
+  }
+}
+
+// Handle collapsible header click
+collapsibleHeaders.forEach(header => {
+  header.addEventListener('click', () => {
+    const content = header.nextElementSibling;
+    const section = header.parentElement;
+    const sectionId = section.id.replace('-section', '');
+
+    // Close all other sections
+    document.querySelectorAll('.section-content.active').forEach(c => {
+      c.classList.remove('active');
+      c.previousElementSibling.classList.remove('active');
+      c.textContent = '';
+      if (c.parentElement.id === 'skills-section') c.innerHTML = '';
+    });
+
+    // Open this section if not already open
+    if (!content.classList.contains('active')) {
+      content.classList.add('active');
+      header.classList.add('active');
+      loadContent(sectionId, content);
+    } else {
+      content.classList.remove('active');
+      header.classList.remove('active');
+      content.textContent = '';
+      if (sectionId === 'skills') content.innerHTML = '';
+    }
+  });
+
+  // Keyboard accessibility
+  header.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      header.click();
+    }
+  });
+});
+
+// Navigation link clicks open respective sections
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const targetId = link.getAttribute('href').slice(1);
+    const targetSection = document.getElementById(targetId);
+    const header = targetSection.querySelector('.collapsible-header');
+    header.click();
+    targetSection.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Start the typing animations
+cycleWelcomeText();
+cycleCenterName();
+cycleTagline();
+
+// Theme toggle button
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('light-theme');
+  themeToggle.textContent = document.body.classList.contains('light-theme') ? '🌙' : '☀️';
+});
+
+// Open About section by default on load
+document.querySelector('#about-section .collapsible-header').click();
+});
+</script>
+
+</body> </html> 
